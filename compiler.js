@@ -1,12 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
-// Paths to the directories containing the files
 const functionsDir = path.join(__dirname, 'modules', 'functions');
 const modulesDir = path.join(__dirname, 'modules');
 const eventsDir = path.join(__dirname, 'modules', 'events');
 
-// Order of files to be combined
 const filesInOrder = [
     path.join(modulesDir, 'setup.js'),
     path.join(modulesDir, 'maps.js'),
@@ -32,7 +30,6 @@ const filesInOrder = [
 const outputFilePath = path.join(__dirname, 'main.js');
 fs.writeFileSync(outputFilePath, '', 'utf8');
 
-// Function to read and append file content
 function appendFileContent(filePath) {
     if (fs.existsSync(filePath)) {
         const fileContent = fs.readFileSync(filePath, 'utf8');
@@ -43,7 +40,6 @@ function appendFileContent(filePath) {
     }
 }
 
-// Iterate through each file in the order and append its content to 'main.js'
 filesInOrder.forEach(filePath => {
     appendFileContent(filePath);
 });

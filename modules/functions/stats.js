@@ -199,4 +199,3 @@ setInterval(() => {
 	}
 	statNumber++;
 }, statInterval * 60 * 1000);
-

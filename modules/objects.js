@@ -12,4 +12,3 @@ function Game(date, scores, goals) {
 	this.scores = scores;
 	this.goals = goals;
 }
-

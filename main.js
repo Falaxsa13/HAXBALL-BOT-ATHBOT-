@@ -1054,7 +1054,6 @@ function Game(date, scores, goals) {
 }
 
 
-
 // auxiliary_functions.js
 /* FUNCTIONS */
 
@@ -1260,6 +1259,7 @@ function checkTime() {
 	}
 }
 
+
 // start_game.js
 /**
  * The function "endGame" handles the end of a game by updating scores, determining the winner,
@@ -1464,6 +1464,7 @@ function setMute(player, value) {
 	extendedP.filter((a) => a[0] == player.id).forEach((player) => player[eP.MUTE] = value);
 }
 
+
 // balance_choose.js
 /* BALANCE & CHOOSE FUNCTIONS */
 
@@ -1659,6 +1660,7 @@ function getSpecList(player) {
 	cstm += ".";
 	room.sendAnnouncement(cstm, player.id, 0x4ffaff, "bold", 2);
 }
+
 
 // stats.js
 /* STATS FUNCTIONS */
@@ -1864,7 +1866,6 @@ setInterval(() => {
 }, statInterval * 60 * 1000);
 
 
-
 // onPlayerJoin.js
 /* EVENTS */
 
@@ -1998,6 +1999,7 @@ room.onPlayerLeave = function(player) {
 room.onPlayerKicked = function(kickedPlayer, reason, ban, byPlayer) {
 	ban == true ? banList.push([kickedPlayer.name, kickedPlayer.id]) : null;
 }
+
 
 // onPlayerChat.js
 // Function that is triggered when a player chats

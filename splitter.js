@@ -22,7 +22,7 @@ const fileSections = mainFileContent.split(/\n\/\/\s(.+)\n/).filter(Boolean);
 
 // Helper function to determine where the file should be written
 function getDirectory(fileName) {
-    const eventsFiles = ['onPlayerJoin.js', 'onPlayerTeamChange.js', 'onPlayerLeave.js', 'onPlayerChat.js', 'gameManagement.js', 'onTeamGoal.js'];
+    const eventsFiles = ['onPlayerJoin.js', 'onPlayerTeamChange.js', 'onPlayerLeave.js', 'onPlayerChat.js', 'onPlayerBallKick.js', 'gameManagement.js', 'onTeamGoal.js'];
     const functionsFiles = ['time.js', 'start_game.js', 'game_setup.js', 'getAuth.js', 'player_control.js', 'balance_choose.js', 'stats.js'];
     const modulesFiles = ['setup.js', 'maps.js', 'variables.js', 'objects.js', 'auxiliary_functions.js'];
 

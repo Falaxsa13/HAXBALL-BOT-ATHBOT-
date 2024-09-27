@@ -24,6 +24,7 @@ const filesInOrder = [
     path.join(eventsDir, 'onPlayerTeamChange.js'),
     path.join(eventsDir, 'onPlayerLeave.js'),
     path.join(eventsDir, 'onPlayerChat.js'),
+    path.join(eventsDir, 'onPlayerBallKick.js'),
     path.join(eventsDir, 'gameManagement.js'),
     path.join(eventsDir, 'onTeamGoal.js'),
 ];

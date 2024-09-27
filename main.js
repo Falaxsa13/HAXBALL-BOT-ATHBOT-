@@ -1,3 +1,5 @@
+
+// setup.js
 // Stats: "Auth" : '["0-Games", "1-Wins", "2-Draws", "3-Losses", "4-Winrate", "5-Goals", "6-Assists", "7-GK", "8-CS", "9-CS%", "10- ELO", "11-Role", "12-Nick"]'
 
 /* VARIABLES */
@@ -32,6 +34,7 @@ room.setTeamsLock(true);
 var player_size = 15;
 
 
+// maps.js
 /* STADIUM */
 
 const playerRadius = 15;
@@ -971,6 +974,8 @@ const bigMap = `{
 	}
 }`;
 
+
+// variables.js
 /* OPTIONS */
 const afkLimit = 12;
 const drawTimeLimit = Infinity;
@@ -1031,6 +1036,8 @@ const statInterval = 6;
 
 loadMap(aloneMap, 0, 0);
 
+
+// objects.js
 /* OBJECTS */
 
 function Goal(time, team, striker, assist) {
@@ -1046,6 +1053,9 @@ function Game(date, scores, goals) {
 	this.goals = goals;
 }
 
+
+
+// auxiliary_functions.js
 /* FUNCTIONS */
 
 /* AUXILIARY FUNCTIONS */
@@ -1205,13 +1215,13 @@ function blueToRedBtn() {
 	}
 }
 
-/* GAME FUNCTIONS */
 
 /* Setting the team colors for a game room. */
 room.setTeamColors(Team.BLUE, 60, 0xFFFFFF, [0x0080ff, 0x0080ff, 0x0080ff]);
 room.setTeamColors(Team.RED, 60, 0xFFFFFF, [0xFF4D40, 0xFF4D40, 0xFF4D40]);
 
 
+// time.js
 /**
  * The function checks the time remaining in a game and performs certain actions based on the time and
  * game scores.
@@ -1250,6 +1260,7 @@ function checkTime() {
 	}
 }
 
+// start_game.js
 /**
  * The function "endGame" handles the end of a game by updating scores, determining the winner,
  * announcing the result, and updating statistics.
@@ -1300,6 +1311,8 @@ function resumeGame() {
 	setTimeout(() => { room.pauseGame(false); }, 1000);
 }
 
+
+// game_setup.js
 /**
  * The function activates the choose mode and sends an announcement message.
  */
@@ -1390,6 +1403,8 @@ function handleInactivity() {
 	}
 }
 
+
+// getAuth.js
 /**
  * The function "getAuth" returns the authentication value for a given player.
  * @param player - The "player" parameter is an object that represents a player.
@@ -1400,6 +1415,8 @@ function getAuth(player) {
 	return extendedP.filter((a) => a[0] == player.id) != null ? extendedP.filter((a) => a[0] == player.id)[0][eP.AUTH] : null;
 }
 
+
+// player_control.js
 /**
  * The function "getAFK" returns the AFK status of a player.
  * @param player - The parameter "player" is an object that represents a player in a game.
@@ -1447,6 +1464,7 @@ function setMute(player, value) {
 	extendedP.filter((a) => a[0] == player.id).forEach((player) => player[eP.MUTE] = value);
 }
 
+// balance_choose.js
 /* BALANCE & CHOOSE FUNCTIONS */
 
 /**
@@ -1642,6 +1660,7 @@ function getSpecList(player) {
 	room.sendAnnouncement(cstm, player.id, 0x4ffaff, "bold", 2);
 }
 
+// stats.js
 /* STATS FUNCTIONS */
 
 /**
@@ -1844,6 +1863,9 @@ setInterval(() => {
 	statNumber++;
 }, statInterval * 60 * 1000);
 
+
+
+// onPlayerJoin.js
 /* EVENTS */
 
 /* PLAYER MOVEMENT */
@@ -1898,6 +1920,8 @@ room.onPlayerJoin = function(player) {
 	}
 }
 
+
+// onPlayerTeamChange.js
 // Function that is triggered when a player change teams
 room.onPlayerTeamChange = function(changedPlayer, byPlayer) {
 	if (changedPlayer.id == 0) {
@@ -1954,6 +1978,8 @@ room.onPlayerTeamChange = function(changedPlayer, byPlayer) {
 	}
 }
 
+
+// onPlayerLeave.js
 // Function that is triggered when a player leaves
 room.onPlayerLeave = function(player) {
 	if (teamR.findIndex((red) => red.id == player.id) == 0 && inChooseMode && teamR.length <= teamB.length) {
@@ -1973,6 +1999,7 @@ room.onPlayerKicked = function(kickedPlayer, reason, ban, byPlayer) {
 	ban == true ? banList.push([kickedPlayer.name, kickedPlayer.id]) : null;
 }
 
+// onPlayerChat.js
 // Function that is triggered when a player chats
 room.onPlayerChat = function (player, message) {
 
@@ -2588,6 +2615,8 @@ room.onPlayerActivity = function(player) {
 	setActivity(player, 0);
 }
 
+
+// onPlayerBallKick.js
 room.onPlayerBallKick = function(player) {
 	if (lastPlayersTouched[0] == null || player.id != lastPlayersTouched[0].id) {
 		!activePlay ? activePlay = true : null;
@@ -2597,8 +2626,8 @@ room.onPlayerBallKick = function(player) {
 	}
 }
 
-/* GAME MANAGEMENT */
 
+// gameManagement.js
 room.onGameStart = function(byPlayer) {
 	game = new Game(Date.now(), room.getScores(), []);
 	countAFK = true;
@@ -2697,7 +2726,6 @@ room.onGameStop = function(byPlayer) {
 	}
 }
 
-
 function change_size(player_size, team) {
 
 	var players = room.getPlayerList();
@@ -2726,6 +2754,32 @@ room.onGameUnpause = function (byPlayer) {
 	}
 }
 
+room.onRoomLink = function(url) {
+}
+
+room.onPlayerAdminChange = function (changedPlayer, byPlayer) {
+	if (getMute(changedPlayer) && changedPlayer.admin) {
+		room.sendAnnouncement(changedPlayer.name + " ha sido desmuteado.");
+		setMute(changedPlayer, false);
+	}
+	if (byPlayer.id != 0 && localStorage.getItem(getAuth(byPlayer)) && JSON.parse(localStorage.getItem(getAuth(byPlayer)))[Ss.RL] == "admin") {
+		room.sendAnnouncement("No tienes permiso para nombrar a un jugador como Administrador !", byPlayer.id);
+		room.setPlayerAdmin(changedPlayer.id, false);
+	}
+}
+
+room.onStadiumChange = function(newStadiumName, byPlayer) {
+}
+
+room.onGameTick = function() {
+	checkTime();
+	getLastTouchOfTheBall();
+	getStats();
+	handleInactivity();
+}
+
+
+// onTeamGoal.js
 room.onTeamGoal = function(team) {
 	activePlay = false;
 	countAFK = false;
@@ -2764,28 +2818,3 @@ room.onPositionsReset = function() {
 	reset_size(player_size);
 }
 
-/* MISCELLANEOUS */
-
-room.onRoomLink = function(url) {
-}
-
-room.onPlayerAdminChange = function (changedPlayer, byPlayer) {
-	if (getMute(changedPlayer) && changedPlayer.admin) {
-		room.sendAnnouncement(changedPlayer.name + " ha sido desmuteado.");
-		setMute(changedPlayer, false);
-	}
-	if (byPlayer.id != 0 && localStorage.getItem(getAuth(byPlayer)) && JSON.parse(localStorage.getItem(getAuth(byPlayer)))[Ss.RL] == "admin") {
-		room.sendAnnouncement("No tienes permiso para nombrar a un jugador como Administrador !", byPlayer.id);
-		room.setPlayerAdmin(changedPlayer.id, false);
-	}
-}
-
-room.onStadiumChange = function(newStadiumName, byPlayer) {
-}
-
-room.onGameTick = function() {
-	checkTime();
-	getLastTouchOfTheBall();
-	getStats();
-	handleInactivity();
-}

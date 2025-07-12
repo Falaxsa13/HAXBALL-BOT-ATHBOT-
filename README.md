@@ -26,8 +26,3 @@ Setup:
 2. Inspect -> Console -> top (www.haxball.com)
 3. Copy the script there and enter
 4. Human verification, and get the room link ( Don't close the window )
-
-
-# Order
-1. vars.js
-2. maps.js
